@@ -1,0 +1,51 @@
+import java.io.*;
+
+public class FileDetails {
+    static void summerize(char[] contents) {
+        int vowles = 0, consonages = 0, lines = 0;
+        for (char c : contents) {
+            if (Character.isLetter(c)) {
+                if ("AEIOUaeiou".indexOf(c) != -1) {
+                    vowles++;
+                } else {
+                    consonages++;
+                }
+            } else if (c == '\n') {
+                lines++;
+            }
+        }
+        System.out.println("총 문자수 : " + contents.length);
+        System.out.println("모음 수 : " + vowles);
+        System.out.println("자음 수 : " + consonages);
+        System.out.println("줄 수 : " + lines);
+    }
+
+    public static void main(String[] args) {
+        //
+        // To-do: Add code here
+        //
+        if (args.length != 1) {
+            System.out.println("Usage: java FileDetails FileName");
+            return;
+        }
+        String fileName = args[0];
+        File file = new File(fileName);
+
+        try (FileInputStream stream = new FileInputStream(file)) {
+            char[] contents = new char[(int) file.length()];
+
+            for (int i = 0; i < contents.length; i++) {
+                contents[i] = (char) stream.read();
+            }
+
+            for (char c : contents) {
+                System.out.print(c);
+            }
+            System.out.println();
+            System.out.println();
+            summerize(contents);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
